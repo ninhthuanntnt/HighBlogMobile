@@ -1,0 +1,12 @@
+{
+  "name": "HighBlogMobile",
+  "displayName": "HighBlogMobile",
+  "expo": {
+    "name": "HighBlogMobile",
+    "slug": "HighBlogMobile",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
