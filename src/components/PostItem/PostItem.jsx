@@ -1,12 +1,9 @@
 import React from "react";
-import {Caption, Card, IconButton, Text, Title, TouchableRipple} from "react-native-paper";
+import {Caption, Card, Text, Title, TouchableRipple} from "react-native-paper";
 import CardContent from "react-native-paper/src/components/Card/CardContent";
 import {View} from "react-native";
 import CardActions from "react-native-paper/src/components/Card/CardActions";
-import {CardTitle} from "react-native-paper/src/components/Card/CardTitle";
-import AvatarImageWithDefault from "../AvatarImageWithDefault/AvatarImageWithDefault";
 import HorizontalView from "../HorizontalView/HorizontalView";
-import LoginedView from "../LoginedView/LoginedView";
 import TagList from "../TagList/TagList";
 import {useNavigation} from "@react-navigation/native";
 import UserCardTitle from "../UserCardTitle/UserCardTitle";

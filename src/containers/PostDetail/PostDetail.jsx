@@ -101,7 +101,7 @@ export default function PostDetail({navigation, route}) {
                                 <TagList tags={postDetail.tags}/>
                             </CardActions>
                             <CardContent>
-                                <HTML html={'<div style="font-size: 1.55em">' + postDetail.content + '</div>'}
+                                <HTML source={{html: '<div style="font-size: 1.55em">' + postDetail.content + '</div>'}}
                                       onLinkPress={openLinkInBrowser}
                                       ignoredStyles={["font-family"]}
                                 />
@@ -115,7 +115,9 @@ export default function PostDetail({navigation, route}) {
                                     <IconButton icon={"facebook"}/>
                                     <IconButton icon={"twitter"}/>
                                 </HorizontalView>
-                                <Button onPress={()=>{navigation.navigate("Comment", {postId})}}>
+                                <Button onPress={() => {
+                                    navigation.navigate("Comment", {postId})
+                                }}>
                                     Comment
                                 </Button>
                                 <HorizontalView>

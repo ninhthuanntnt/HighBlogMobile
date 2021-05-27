@@ -6,7 +6,7 @@ function UserCardTitle({user}){
     return (
         <>
             <CardTitle title={`${user.firstName} ${user.lastName}`}
-                       subtitle={user.nickName}
+                       subtitle={`@${user.nickName}`}
                        left={() => (
                            <AvatarImageWithDefault imagePath={user.imagePath} size={30}/>)}/>
         </>

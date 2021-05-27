@@ -1,18 +1,26 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {FlatList} from "react-native";
-import {fetchListPostBy} from "./PostList.service";
+import {fetchList, fetchListPostBy} from "./PostList.service";
 import {Divider} from "react-native-paper";
 import {useFocusEffect} from "@react-navigation/native";
 
-function PostList({url, renderItem}) {
+function PostList({url, renderItem, isPagination = true}) {
     let [refreshing, setRefreshing] = useState(false);
     let [listPosts, setListPosts] = useState([]);
     let [staticState, setStaticState] = useState({page: 1})
 
     useFocusEffect(
         useCallback(() => {
-                fetchListPostBy(url, staticState.page).then(listData => setListPosts(listData));
-            }, [url]));
+            staticState.page = 1;
+            if (isPagination)
+                fetchListPostBy(url, staticState.page).then(listData => {
+                    setListPosts(listData);
+                });
+            else
+                fetchList(url).then(listData => {
+                    setListPosts(listData)
+                })
+        }, [url]));
 
     const appendData = () => {
         fetchListPostBy(url, staticState.page + 1)
@@ -23,10 +31,15 @@ function PostList({url, renderItem}) {
     }
 
     const resetData = () => {
-        fetchListPostBy(url, 1).then(data => {
-            setListPosts(data);
-            staticState.page = 1;
-        });
+        if (isPagination)
+            fetchListPostBy(url, 1).then(data => {
+                setListPosts(data);
+                staticState.page = 1;
+            });
+        else
+            fetchList(url).then(data => {
+                setListPosts(data);
+            })
     }
 
     //TODO: research about virtual list for best performance
@@ -39,7 +52,8 @@ function PostList({url, renderItem}) {
                       onRefresh={resetData}
                       ItemSeparatorComponent={() => (<Divider/>)}
                       onEndReachedThreshold={5}
-                      onEndReached={appendData}
+                      onEndReached={isPagination ? appendData : () => {
+                      }}
                       removeClippedSubviews={true}
                       maxToRenderPerBatch={20}
             />
