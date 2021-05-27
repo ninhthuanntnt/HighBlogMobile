@@ -23,7 +23,6 @@ function PostList({url, renderItem}) {
     }
 
     const resetData = () => {
-
         fetchListPostBy(url, 1).then(data => {
             setListPosts(data);
             staticState.page = 1;
