@@ -1,34 +1,57 @@
 import React from "react";
-import {Caption, Card, Text, Title, TouchableRipple} from "react-native-paper";
+import {Button, Card, Text, Title} from "react-native-paper";
 import CardContent from "react-native-paper/src/components/Card/CardContent";
-import {View} from "react-native";
-import CardActions from "react-native-paper/src/components/Card/CardActions";
-import TagList from "../TagList/TagList";
 import {useNavigation} from "@react-navigation/native";
 import UserCardTitle from "../UserCardTitle/UserCardTitle";
+import CardActions from "react-native-paper/src/components/Card/CardActions";
 
-function CommentItem({comment}) {
-    console.log(comment);
+function CommentItem({comment, postId}) {
     let navigation = useNavigation();
+
+    let childComments = null;
+
+    let navigationToChildCommentScreen = () => navigation.navigate("ChildComment", {comment: comment, postId: postId});
+    if (comment.childComments) {
+        let firstChildComments = comment.childComments[0];
+
+        let loadMore = null;
+
+        if (comment.childComments.length > 1) {
+            loadMore = (
+                <Button onPress={navigationToChildCommentScreen}>
+                    See more comments...
+                </Button>
+            );
+        }
+
+        childComments = (
+            <Card style={{paddingLeft: 30}} key={firstChildComments.id}>
+
+                <UserCardTitle user={firstChildComments.user}/>
+                <CardContent style={{marginTop: -25, borderLeftColor: "#ccc", borderLeftWith: 1}}>
+                    <Title>{firstChildComments.title}</Title>
+                    <Text>{firstChildComments.content}</Text>
+                </CardContent>
+                <CardContent>
+                    {loadMore}
+                </CardContent>
+            </Card>
+        );
+    }
     return (
-        <Card>
-            <UserCardTitle user={comment.user}/>
-            <CardContent>
-                <TouchableRipple onPress={
-                    () => {}
-                }>
-                    <View>
-                        <Title>{comment.title}</Title>
-                        <Text>{comment.content}</Text>
-                        <Caption
-                            style={{textAlign: "right"}}>{new Date(comment.createdDate).toDateString()}</Caption>
-                    </View>
-                </TouchableRipple>
-            </CardContent>
-            <CardActions style={{paddingBottom: 0}}>
-                <TagList tags={comment.tags}/>
-            </CardActions>
-        </Card>
+        <>
+            <Card>
+                <UserCardTitle user={comment.user}/>
+                <CardContent style={{marginTop: -25}}>
+                    <Title>{comment.title}</Title>
+                    <Text>{comment.content}</Text>
+                </CardContent>
+                <CardActions style={{justifyContent: "flex-end"}}>
+                    <Button onPress={navigationToChildCommentScreen}>reply</Button>
+                </CardActions>
+            </Card>
+            {childComments}
+        </>
     )
 }
 
