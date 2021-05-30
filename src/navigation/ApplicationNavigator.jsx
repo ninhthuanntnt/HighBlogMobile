@@ -2,27 +2,42 @@ import React from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 import MainStack from "./MainStack";
 import LoginStack from "./LoginStack";
-import DefaultAvatar from "../assets/default_avatar.png";
 import SettingStack from "./SettingStack";
 import ProfileStack from "./ProfileStack";
 import SearchStack from "./SearchStack";
 import {TextInput, View} from "react-native";
-import {Avatar, Button} from "react-native-paper";
 import {MainHeaderRight} from "../components/MainHeaderRight/MainHeaderRight";
 import PostDetailStack from "./PostDetailStack";
 import RegisterStack from "./RegisterStack";
+import {PreferencesContext} from "../config/PreferencesContext";
+import {IconButton, Switch, Title} from "react-native-paper";
+import HorizontalView from "../components/HorizontalView/HorizontalView";
 
 
 const Stack = createStackNavigator();
 
 export default function ApplicationNavigator() {
+
+    const {toggleTheme, isThemeDark} = React.useContext(PreferencesContext);
+
     return (
         <Stack.Navigator>
             <Stack.Screen name={"MainStack"}
                           component={MainStack}
                           options={({navigation}) => (
                               {
-                                  title: "HighBlog",
+                                  headerTitle: () => (
+                                      <HorizontalView style={{alignItems: "center"}}>
+                                          <Title>HIGH BLOG</Title>
+                                          {isThemeDark ?
+                                              <IconButton icon={"moon-waning-crescent"}
+                                                          color={"yellow"}
+                                                          onPress={toggleTheme}/> :
+                                              <IconButton icon={"weather-sunny"}
+                                                          color={"orange"}
+                                                          onPress={toggleTheme}/>}
+                                      </HorizontalView>
+                                  ),
                                   headerRight: () => (
                                       <MainHeaderRight navigation={navigation}/>
                                   )
@@ -31,7 +46,10 @@ export default function ApplicationNavigator() {
 
             <Stack.Screen name={"LoginStack"}
                           component={LoginStack}
-                          options={{title: "Login"}}/>
+                          options={{
+                              title: "Login",
+                              headerShown: false
+                          }}/>
 
             <Stack.Screen name={"RegisterStack"}
                           component={RegisterStack}

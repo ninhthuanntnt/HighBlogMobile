@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Linking, ScrollView, View} from "react-native";
-import {Button, Caption, Card, IconButton, Title} from "react-native-paper";
+import {Button, Caption, Card, IconButton, Title, useTheme} from "react-native-paper";
 import {
     addToFavorite,
     createPostVote,
@@ -20,6 +20,7 @@ import TagList from "../../components/TagList/TagList";
 
 export default function PostDetail({navigation, route}) {
 
+    let theme = useTheme();
     let postId = route.params.postId
     let [postDetail, setPostDetail] = useState(null);
 
@@ -101,7 +102,11 @@ export default function PostDetail({navigation, route}) {
                                 <TagList tags={postDetail.tags}/>
                             </CardActions>
                             <CardContent>
-                                <HTML source={{html: '<div style="font-size: 1.55em">' + postDetail.content + '</div>'}}
+                                <HTML source={{
+                                    html: `<div style="font-size: 1.55em; color: ${theme.colors.text}">`
+                                        + postDetail.content
+                                        + '</div>'
+                                }}
                                       onLinkPress={openLinkInBrowser}
                                       ignoredStyles={["font-family"]}
                                 />
