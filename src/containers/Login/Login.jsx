@@ -5,6 +5,7 @@ import {Controller, useForm} from "react-hook-form";
 import {getProfile, loginAndStoreToken} from "./Login.service";
 import {useDispatch} from "react-redux";
 import {setUserData} from "../../redux/actions/userDataAction";
+import AnimatedLogo from "../../components/AnimatedLogo/AnimatedLogo";
 
 export default function Login({navigation}) {
 
@@ -26,10 +27,7 @@ export default function Login({navigation}) {
 
     return (
         <View>
-            <Text>
-                Login page
-            </Text>
-
+            <AnimatedLogo width={350} height={400} style={{marginRight: 20}}/>
             <Controller control={control}
                         render={({field: {onChange, onBlur, value}}) => (
                             <TextInput mode="outlined"
@@ -38,12 +36,13 @@ export default function Login({navigation}) {
                                        onBlur={onBlur}
                                        onChangeText={value => onChange(value)}
                                        value={value}
+                                       style={{marginHorizontal: 20, marginVertical: 10}}
                             />
                         )}
                         name={"username"}
                         rules={{required: true}}
                         defaultValue=""/>
-            {errors.username && (<Text>This is required.</Text>)}
+            {errors.username && (<Text style={{marginHorizontal: 20, color: "#f55c47"}}>Username is required.</Text>)}
 
             <Controller control={control}
                         render={({field: {onChange, onBlur, value}}) => (
@@ -54,12 +53,13 @@ export default function Login({navigation}) {
                                        onChangeText={value => onChange(value)}
                                        value={value}
                                        secureTextEntry={true}
+                                       style={{marginHorizontal: 20, marginVertical: 10}}
                             />
                         )}
                         name={"password"}
                         rules={{required: true}}
                         defaultValue=""/>
-            {errors.password && (<Text>This is required.</Text>)}
+            {errors.password && (<Text style={{marginHorizontal: 20, color: "#f55c47"}}>Password is required.</Text>)}
             <Button onPress={handleSubmit(onSubmit)}>
                 Login
             </Button>

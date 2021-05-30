@@ -2,12 +2,12 @@ import React, {useState} from "react";
 import {TextInput, View} from "react-native";
 import PostList from "../../components/PostList/PostList";
 import CommentItem from "../../components/CommentItem/CommentItem";
-import {Card, IconButton} from "react-native-paper";
+import {Button, Card, IconButton} from "react-native-paper";
 import CardContent from "react-native-paper/src/components/Card/CardContent";
 import CardActions from "react-native-paper/src/components/Card/CardActions";
 import HorizontalView from "../../components/HorizontalView/HorizontalView";
 import {addComment} from "./Comment.service";
-
+import LoginedView from "../../components/LoginedView/LoginedView";
 
 
 function Comment({navigation, route}) {
@@ -17,7 +17,7 @@ function Comment({navigation, route}) {
 
     let [commentText, setCommentText] = useState('');
 
-    const forceUpdate = ()=>{
+    const forceUpdate = () => {
         setValue(value + 1);
     }
 
@@ -37,20 +37,27 @@ function Comment({navigation, route}) {
                 )}
                 isPagination={false}
             />
+            {/* TODO: Create a component to use in both Comment and ChildComment*/}
             <Card>
-                <HorizontalView style={{justifyContent: "space-between"}}>
-                    <View style={{flex: 1}}>
-                        <CardContent style={{borderBottom: "1px solid black"}}>
-                            <TextInput placeholder={"Add your comment..."}
-                                       onChangeText={(text) => setCommentText(text)}
-                                       value={commentText}/>
-                        </CardContent>
-                    </View>
-                    <CardActions>
-                        <IconButton icon={"send-circle"}
-                                    onPress={addNewComment}/>
-                    </CardActions>
-                </HorizontalView>
+                <LoginedView fallBackComponent={(
+                    <CardContent>
+                        <Button onPress={() => navigation.navigate("LoginStack")}>Login to add comment...</Button>
+                    </CardContent>
+                )}>
+                    <HorizontalView style={{justifyContent: "space-between"}}>
+                        <View style={{flex: 1}}>
+                            <CardContent style={{borderBottom: "1px solid black"}}>
+                                <TextInput placeholder={"Add your comment..."}
+                                           onChangeText={(text) => setCommentText(text)}
+                                           value={commentText}/>
+                            </CardContent>
+                        </View>
+                        <CardActions>
+                            <IconButton icon={"send-circle"}
+                                        onPress={addNewComment}/>
+                        </CardActions>
+                    </HorizontalView>
+                </LoginedView>
             </Card>
         </View>
     )

@@ -1,6 +1,6 @@
 import React from "react";
 import {Avatar} from "react-native-paper";
-import DefaultAvatar from "../../assets/default_avatar.png";
+import DefaultAvatar from "../../assets/images/default_avatar.png";
 import {BASE_URL} from "../../constants/Constant";
 
 function AvatarImageWithDefault({imagePath, size, onTouchEnd}){
