@@ -14,7 +14,6 @@ class ApiUtil {
             headers,
             withCredentials: true
         });
-        console.log(response);
         return response;
 
     }
@@ -34,7 +33,7 @@ class ApiUtil {
             headers,
             withCredentials: true
         });
-        console.log(response);
+
         return response;
 
     }
@@ -51,7 +50,7 @@ class ApiUtil {
         let response = await AxiosConfig.post(url, body, {
             withCredentials: true
         });
-        console.log(response);
+
         return response;
 
     }

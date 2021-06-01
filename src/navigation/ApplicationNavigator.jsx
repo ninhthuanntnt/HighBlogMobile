@@ -12,6 +12,7 @@ import RegisterStack from "./RegisterStack";
 import {PreferencesContext} from "../config/PreferencesContext";
 import {IconButton, Switch, Title} from "react-native-paper";
 import HorizontalView from "../components/HorizontalView/HorizontalView";
+import SearchHeader from "../components/SearchHeader/SearchHeader";
 
 
 const Stack = createStackNavigator();
@@ -70,11 +71,7 @@ export default function ApplicationNavigator() {
             <Stack.Screen name={"SearchStack"}
                           component={SearchStack}
                           options={{
-                              headerTitle: () => (
-                                  <>
-                                      <TextInput placeholder={"Search..."}/>
-                                  </>
-                              )
+                              headerTitle: ()=>(<SearchHeader/>)
                           }}/>
         </Stack.Navigator>
     );

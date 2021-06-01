@@ -1,16 +1,18 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {FlatList} from "react-native";
+import React, {useEffect, useState} from "react";
+import {FlatList, View} from "react-native";
 import {fetchList, fetchListPostBy} from "./PostList.service";
-import {Divider} from "react-native-paper";
-import {useFocusEffect} from "@react-navigation/native";
+import {ActivityIndicator, Card, Colors, Divider, Text} from "react-native-paper";
+import {OptimizedFlatList} from "react-native-optimized-flatlist";
+import CardContent from "react-native-paper/src/components/Card/CardContent";
 
 function PostList({url, renderItem, isPagination = true}) {
+    console.log("Re-render PostList");
     let [refreshing, setRefreshing] = useState(false);
-    let [listPosts, setListPosts] = useState([]);
+    let [listPosts, setListPosts] = useState(null);
     let [staticState, setStaticState] = useState({page: 1})
 
-    useFocusEffect(
-        useCallback(() => {
+    useEffect(
+        () => {
             staticState.page = 1;
             if (isPagination)
                 fetchListPostBy(url, staticState.page).then(listData => {
@@ -20,12 +22,16 @@ function PostList({url, renderItem, isPagination = true}) {
                 fetchList(url).then(listData => {
                     setListPosts(listData)
                 })
-        }, [url]));
+        }, [url]);
 
     const appendData = () => {
+        console.log("Load more");
+        if (listPosts === null)
+            listPosts = [];
         fetchListPostBy(url, staticState.page + 1)
-            .then(data => {
-                setListPosts([...listPosts, ...data]);
+            .then(listData => {
+                listData.forEach(data => listPosts.push(data))
+                setListPosts(listPosts);
                 staticState.page += 1;
             });
     }
@@ -43,22 +49,41 @@ function PostList({url, renderItem, isPagination = true}) {
     }
 
     //TODO: research about virtual list for best performance
+    let listEmptyComponent = null;
+    if (listPosts !== null) {
+        if (listPosts)
+            listEmptyComponent = (
+                <Card>
+                    <CardContent>
+                        <Text style={{textAlign: "center"}}>
+                            Nothing to show
+                        </Text>
+                    </CardContent>
+                </Card>
+            )
+    }
     return (
-        <>
-            <FlatList data={listPosts}
-                      keyExtractor={(item, index) => index.toString()}
-                      renderItem={renderItem}
-                      refreshing={refreshing}
-                      onRefresh={resetData}
-                      ItemSeparatorComponent={() => (<Divider/>)}
-                      onEndReachedThreshold={5}
-                      onEndReached={isPagination ? appendData : () => {
-                      }}
-                      removeClippedSubviews={true}
-                      maxToRenderPerBatch={20}
+        <View>
+            <OptimizedFlatList data={listPosts}
+                               keyExtractor={(item, index) => index.toString()}
+                               renderItem={renderItem}
+                               refreshing={refreshing}
+                               onRefresh={resetData}
+                               ItemSeparatorComponent={() => (<Divider/>)}
+                               onEndReachedThreshold={10}
+                               onEndReached={isPagination ? appendData : () => {
+                               }}
+                               ListEmptyComponent={listEmptyComponent}
+                               removeClippedSubviews={true}
+                               maxToRenderPerBatch={5}
+                               ListFooterComponent={listPosts === null
+                                   ? <ActivityIndicator animating={true}
+                                                        color={Colors.red800}/>
+                                   : <></>
+                               }
             />
-        </>
-    )
+        </View>
+    );
 }
 
 export default PostList;

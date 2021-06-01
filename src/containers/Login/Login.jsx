@@ -22,7 +22,7 @@ export default function Login({navigation}) {
             navigation.navigate("MainStack");
         }
 
-        submit(data).then(r => console.log(r));
+        submit(data);
     };
 
     return (
