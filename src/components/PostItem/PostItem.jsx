@@ -1,7 +1,7 @@
 import React from "react";
 import {Caption, Card, Text, Title, TouchableRipple} from "react-native-paper";
 import CardContent from "react-native-paper/src/components/Card/CardContent";
-import {View} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import CardActions from "react-native-paper/src/components/Card/CardActions";
 import HorizontalView from "../HorizontalView/HorizontalView";
 import TagList from "../TagList/TagList";
@@ -10,12 +10,16 @@ import UserCardTitle from "../UserCardTitle/UserCardTitle";
 
 function PostItem({post}) {
     let navigation = useNavigation();
+
+    const navigateToDetail = ()=>{
+        navigation.navigate("PostDetailStack", {screen: "PostDetail", params: {postId: post.id}})
+    }
+
     return (
         <Card>
             <UserCardTitle user={post.user}/>
             <CardContent>
-                <TouchableRipple onPress={
-                    () => navigation.navigate("PostDetailStack", {screen: "PostDetail", params: {postId: post.id}})
+                <TouchableOpacity onPress={navigateToDetail
                 }>
                     <View>
                         <Title>{post.title}</Title>
@@ -23,7 +27,7 @@ function PostItem({post}) {
                         <Caption
                             style={{textAlign: "right"}}>{new Date(post.createdDate).toDateString()}</Caption>
                     </View>
-                </TouchableRipple>
+                </TouchableOpacity>
             </CardContent>
             <CardActions style={{paddingBottom: 0}}>
                 <TagList tags={post.tags}/>
@@ -39,4 +43,4 @@ function PostItem({post}) {
     )
 }
 
-export default PostItem;
+export default React.memo(PostItem);

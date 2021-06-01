@@ -30,7 +30,6 @@ export default function PostDetail({navigation, route}) {
     useEffect(() => {
         getPostDetail(postId)
             .then(result => {
-                console.log(result);
                 setPostDetail(result);
                 setVoteType(result.vote ? result.vote.voteType : null);
                 setAddedToFavorite(result.addedToFavorite);
