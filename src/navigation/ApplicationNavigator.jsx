@@ -3,16 +3,16 @@ import {createStackNavigator} from "@react-navigation/stack";
 import MainStack from "./MainStack";
 import LoginStack from "./LoginStack";
 import SettingStack from "./SettingStack";
-import ProfileStack from "./ProfileStack";
 import SearchStack from "./SearchStack";
-import {TextInput, View} from "react-native";
 import {MainHeaderRight} from "../components/MainHeaderRight/MainHeaderRight";
 import PostDetailStack from "./PostDetailStack";
 import RegisterStack from "./RegisterStack";
 import {PreferencesContext} from "../config/PreferencesContext";
-import {IconButton, Switch, Title} from "react-native-paper";
+import {IconButton, Title} from "react-native-paper";
 import HorizontalView from "../components/HorizontalView/HorizontalView";
 import SearchHeader from "../components/SearchHeader/SearchHeader";
+import PersonalStack from "./PersonalStack";
+import ImageStack from "./ImageStack";
 
 
 const Stack = createStackNavigator();
@@ -64,15 +64,20 @@ export default function ApplicationNavigator() {
                           component={SettingStack}
                           options={{title: "Settings"}}/>
 
-            <Stack.Screen name={"ProfileStack"}
-                          component={ProfileStack}
-                          options={({route}) => ({title: route.params.nickName})}/>
+            <Stack.Screen name={"PersonalStack"}
+                          component={PersonalStack}
+                          options={({route}) => (
+                              {title: '@' + route.params.params.nickName}
+                          )}/>
 
             <Stack.Screen name={"SearchStack"}
                           component={SearchStack}
                           options={{
-                              headerTitle: ()=>(<SearchHeader/>)
+                              headerTitle: () => (<SearchHeader/>)
                           }}/>
+            <Stack.Screen name={"ImageStack"}
+                          component={ImageStack}
+                          options={{title: "Image"}}/>
         </Stack.Navigator>
     );
 }

@@ -46,6 +46,20 @@ class ApiUtil {
         return await response.data;
     }
 
+    static async updateImage(url, body) {
+        let headers = {}
+        await this.#appendAuthorizationToHeader(headers);
+        let response = await AxiosConfig.put(url, body, {
+            headers: {
+                ...headers,
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
+        return await response.data;
+    }
+
+    // TODO: return data instead of response
     static async login(url, body) {
         let response = await AxiosConfig.post(url, body, {
             withCredentials: true
