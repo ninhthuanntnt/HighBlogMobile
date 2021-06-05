@@ -73,7 +73,7 @@ export default function PostDetail({navigation, route}) {
                         <Card>
                             <UserCardTitle user={postDetail.user}/>
                             <CardContent>
-                                <Title style={{fontSize: 33}}>
+                                <Title style={{fontSize: 32}}>
                                     {postDetail.title}
                                 </Title>
                             </CardContent>

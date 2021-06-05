@@ -5,8 +5,7 @@ import {ActivityIndicator, Card, Colors, Divider, Text} from "react-native-paper
 import {OptimizedFlatList} from "react-native-optimized-flatlist";
 import CardContent from "react-native-paper/src/components/Card/CardContent";
 
-function PostList({url, renderItem, isPagination = true}) {
-    console.log("Re-render PostList");
+function PostList({url, listHeaderComponent, renderItem, isPagination = true}) {
     let [refreshing, setRefreshing] = useState(false);
     let [listPosts, setListPosts] = useState(null);
     let [staticState, setStaticState] = useState({page: 1})
@@ -25,7 +24,6 @@ function PostList({url, renderItem, isPagination = true}) {
         }, [url]);
 
     const appendData = () => {
-        console.log("Load more");
         if (listPosts === null)
             listPosts = [];
         fetchListPostBy(url, staticState.page + 1)
@@ -53,7 +51,7 @@ function PostList({url, renderItem, isPagination = true}) {
     if (listPosts !== null) {
         if (listPosts)
             listEmptyComponent = (
-                <Card>
+                <Card mode={"outlined"}>
                     <CardContent>
                         <Text style={{textAlign: "center"}}>
                             Nothing to show
@@ -66,6 +64,7 @@ function PostList({url, renderItem, isPagination = true}) {
         <View>
             <OptimizedFlatList data={listPosts}
                                keyExtractor={(item, index) => index.toString()}
+                               ListHeaderComponent={listHeaderComponent}
                                renderItem={renderItem}
                                refreshing={refreshing}
                                onRefresh={resetData}
@@ -81,6 +80,7 @@ function PostList({url, renderItem, isPagination = true}) {
                                                         color={Colors.red800}/>
                                    : <></>
                                }
+                               showsVerticalScrollIndicator={false}
             />
         </View>
     );

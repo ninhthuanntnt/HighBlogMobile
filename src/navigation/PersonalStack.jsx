@@ -1,12 +1,12 @@
 import React from "react";
 import {createStackNavigator} from "@react-navigation/stack";
-import Profile from "../containers/Profile/Profile";
+import Personal from "../containers/Personal/Personal";
 
 const Stack = createStackNavigator();
-export default function ProfileStack(){
+export default function PersonalStack(){
     return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name={"Profile"} component={Profile}/>
+            <Stack.Screen name={"Personal"} component={Personal}/>
         </Stack.Navigator>
     );
 }
