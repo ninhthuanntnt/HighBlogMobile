@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 import MainStack from "./MainStack";
 import LoginStack from "./LoginStack";
@@ -13,6 +13,9 @@ import HorizontalView from "../components/HorizontalView/HorizontalView";
 import SearchHeader from "../components/SearchHeader/SearchHeader";
 import PersonalStack from "./PersonalStack";
 import ImageStack from "./ImageStack";
+import {getProfile} from "../containers/Login/Login.service";
+import {useDispatch} from "react-redux";
+import {setUserData} from "../redux/actions/userDataAction";
 
 
 const Stack = createStackNavigator();
@@ -20,6 +23,14 @@ const Stack = createStackNavigator();
 export default function ApplicationNavigator() {
 
     const {toggleTheme, isThemeDark} = React.useContext(PreferencesContext);
+
+    let dispatch = useDispatch();
+
+    useEffect(() => {
+            getProfile()
+                .then(res => dispatch(setUserData(res)))
+        },
+        []);
 
     return (
         <Stack.Navigator>

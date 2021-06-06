@@ -5,6 +5,7 @@ import {ActivityIndicator, Card, Colors, Divider, Text} from "react-native-paper
 import {OptimizedFlatList} from "react-native-optimized-flatlist";
 import CardContent from "react-native-paper/src/components/Card/CardContent";
 
+//TODO: Rename
 function PostList({url, listHeaderComponent, renderItem, isPagination = true}) {
     let [refreshing, setRefreshing] = useState(false);
     let [listPosts, setListPosts] = useState(null);

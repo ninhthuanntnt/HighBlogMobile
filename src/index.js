@@ -1,17 +1,16 @@
 import React from 'react';
 import ApplicationNavigator from "./navigation/ApplicationNavigator";
 import {
-    NavigationContainer,
     DarkTheme as NavigationDarkTheme,
-    DefaultTheme as NavigationDefaultTheme
+    DefaultTheme as NavigationDefaultTheme,
+    NavigationContainer
 } from "@react-navigation/native";
 import {Provider} from "react-redux";
 import store from "./redux/store";
-import merge from 'deepmerge';
 
 import {
-    DefaultTheme as PaperDefaultTheme,
     DarkTheme as PaperDarkTheme,
+    DefaultTheme as PaperDefaultTheme,
     Provider as PaperProvider
 } from 'react-native-paper';
 import {PreferencesContext} from "./config/PreferencesContext";
