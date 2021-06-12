@@ -4,7 +4,6 @@ import HorizontalView from "../HorizontalView/HorizontalView";
 import {TextInput} from "react-native";
 
 function SearchHeader() {
-    console.log("Re-render SearchHeader");
     let navigation = useNavigation();
     let [searchText, setSearchText] = useState("");
     let textInputRef = useRef();
@@ -15,7 +14,7 @@ function SearchHeader() {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         textInputRef.focus();
     }, [])
 

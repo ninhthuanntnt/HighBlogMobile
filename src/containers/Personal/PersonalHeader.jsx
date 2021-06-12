@@ -18,7 +18,7 @@ function PersonalHeader({userInfo, uploadBackground, uploadAvatar}) {
         }
 
         let aspect = [16, 9]
-        if(imageType === AVATAR_TYPE)
+        if (imageType === AVATAR_TYPE)
             aspect = [1, 1];
 
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -28,10 +28,8 @@ function PersonalHeader({userInfo, uploadBackground, uploadAvatar}) {
             quality: 1,
         });
 
-        console.log(result);
-
         if (!result.cancelled) {
-            if(imageType === BACKGROUND_TYPE)
+            if (imageType === BACKGROUND_TYPE)
                 uploadBackground(result.uri);
             else
                 uploadAvatar(result.uri);
@@ -44,7 +42,7 @@ function PersonalHeader({userInfo, uploadBackground, uploadAvatar}) {
             <ViewableImage source={BASE_URL + "/" + userInfo.backgroundPath}
                            style={{height: win.width * 9 / 16, resizeMode: "cover"}}>
                 <IconButton icon={"pencil-box"}
-                            onPress={()=>pickImage(BACKGROUND_TYPE)}
+                            onPress={() => pickImage(BACKGROUND_TYPE)}
                             color={"white"}
                             size={40}
                             style={{
@@ -70,7 +68,7 @@ function PersonalHeader({userInfo, uploadBackground, uploadAvatar}) {
                                }}
                                isContainedBorderRadius={true}>
                     <IconButton icon={"pencil"}
-                                onPress={()=>pickImage(AVATAR_TYPE)}
+                                onPress={() => pickImage(AVATAR_TYPE)}
                                 style={{
                                     borderWidth: 1,
                                     borderColor: Colors.grey200,
