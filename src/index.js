@@ -21,7 +21,7 @@ const CustomizedDarkTheme = {
     colors: {
         ...NavigationDarkTheme.colors,
         ...PaperDarkTheme.colors,
-        primary: "#005a8d"
+        primary: "#29bb89"
     },
 }
 
@@ -32,7 +32,7 @@ const CustomizedLightTheme = {
         ...NavigationDefaultTheme.colors,
         ...PaperDefaultTheme.colors,
         background: "white",
-        primary: "#005a8d"
+        primary: "#00917c"
     },
 }
 

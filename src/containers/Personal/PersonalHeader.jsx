@@ -1,13 +1,31 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Dimensions, Platform, View} from "react-native";
 import ViewableImage from "../../components/ViewableImage/TouchableImage";
 import {BASE_URL} from "../../constants/Constant";
-import {Caption, Colors, IconButton, Title} from "react-native-paper";
+import {Button, Caption, Colors, IconButton, Title} from "react-native-paper";
 import * as ImagePicker from 'expo-image-picker';
+import CurrentUserLoginView from "../../components/CurrentUserLoginView/CurrentUserLoginView";
+import NotCurrentUserLoginView from "../../components/CurrentUserLoginView/NotCurrentUserLoginView";
+import {follow, switchNotified, unFollow} from "./Personal.service";
 
 function PersonalHeader({userInfo, uploadBackground, uploadAvatar}) {
     const BACKGROUND_TYPE = "background";
     const AVATAR_TYPE = "avatar";
+
+    let [followed, setFollowed] = useState(userInfo.followed);
+    let [notified, setNotified] = useState(userInfo.notified);
+
+    let switchFollowedState = () => {
+        if (followed) {
+            unFollow(userInfo.nickName).then(() => setFollowed(false));
+        } else {
+            follow(userInfo.nickName).then(() => setFollowed(true));
+        }
+    }
+
+    let switchNotifiedState = () => {
+        switchNotified(userInfo.nickName).then(() => setNotified(!notified));
+    }
 
     const pickImage = async (imageType) => {
         if (Platform.OS !== 'web') {
@@ -18,7 +36,7 @@ function PersonalHeader({userInfo, uploadBackground, uploadAvatar}) {
         }
 
         let aspect = [16, 9]
-        if(imageType === AVATAR_TYPE)
+        if (imageType === AVATAR_TYPE)
             aspect = [1, 1];
 
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -28,10 +46,8 @@ function PersonalHeader({userInfo, uploadBackground, uploadAvatar}) {
             quality: 1,
         });
 
-        console.log(result);
-
         if (!result.cancelled) {
-            if(imageType === BACKGROUND_TYPE)
+            if (imageType === BACKGROUND_TYPE)
                 uploadBackground(result.uri);
             else
                 uploadAvatar(result.uri);
@@ -43,15 +59,17 @@ function PersonalHeader({userInfo, uploadBackground, uploadAvatar}) {
         <>
             <ViewableImage source={BASE_URL + "/" + userInfo.backgroundPath}
                            style={{height: win.width * 9 / 16, resizeMode: "cover"}}>
-                <IconButton icon={"pencil-box"}
-                            onPress={()=>pickImage(BACKGROUND_TYPE)}
-                            color={"white"}
-                            size={40}
-                            style={{
-                                position: "absolute",
-                                right: -5,
-                                bottom: -5
-                            }}/>
+                <CurrentUserLoginView user={userInfo}>
+                    <IconButton icon={"pencil-box"}
+                                onPress={() => pickImage(BACKGROUND_TYPE)}
+                                color={"white"}
+                                size={40}
+                                style={{
+                                    position: "absolute",
+                                    right: -5,
+                                    bottom: -5
+                                }}/>
+                </CurrentUserLoginView>
             </ViewableImage>
 
             <View style={{
@@ -69,17 +87,18 @@ function PersonalHeader({userInfo, uploadBackground, uploadAvatar}) {
                                    borderWidth: 5
                                }}
                                isContainedBorderRadius={true}>
-                    <IconButton icon={"pencil"}
-                                onPress={()=>pickImage(AVATAR_TYPE)}
-                                style={{
-                                    borderWidth: 1,
-                                    borderColor: Colors.grey200,
-                                    backgroundColor: "white",
-                                    position: "absolute",
-                                    left: 140,
-                                    top: 150
-
-                                }}/>
+                    <CurrentUserLoginView user={userInfo}>
+                        <IconButton icon={"pencil"}
+                                    onPress={() => pickImage(AVATAR_TYPE)}
+                                    style={{
+                                        borderWidth: 1,
+                                        borderColor: Colors.grey200,
+                                        backgroundColor: "white",
+                                        position: "absolute",
+                                        left: 140,
+                                        top: 150
+                                    }}/>
+                    </CurrentUserLoginView>
                 </ViewableImage>
 
                 <Title style={{
@@ -90,6 +109,22 @@ function PersonalHeader({userInfo, uploadBackground, uploadAvatar}) {
                     {userInfo.firstName} {userInfo.lastName}
                 </Title>
                 <Caption style={{fontSize: 18}}>@{userInfo.nickName}</Caption>
+                <NotCurrentUserLoginView user={userInfo}>
+                    <View style={{flexDirection: "row", alignItems: "center"}}>
+                        <Button mode={followed ? "contained" : "outlined"}
+                                onPress={switchFollowedState}
+                                style={{marginTop: 20, width: "50%", padding: 5}}>
+                            {followed ? "FOLLOWED" : "FOLLOW"}
+                        </Button>
+                        {
+                            followed
+                                ? <IconButton icon={notified ? "bell-outline" : "bell-ring"}
+                                              onPress={switchNotifiedState}
+                                              style={{marginTop: 25}}/>
+                                : <></>
+                        }
+                    </View>
+                </NotCurrentUserLoginView>
             </View>
         </>
     )

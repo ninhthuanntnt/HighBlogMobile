@@ -24,8 +24,6 @@ function PostItem({post}) {
                     <View>
                         <Title>{post.title}</Title>
                         <Text>{post.summary}</Text>
-                        <Caption
-                            style={{textAlign: "right"}}>{new Date(post.createdDate).toDateString()}</Caption>
                     </View>
                 </TouchableOpacity>
             </CardContent>
@@ -37,6 +35,8 @@ function PostItem({post}) {
                     <Caption style={{marginHorizontal: 5}}>{post.numberOfVotes} votes</Caption>
                     <Caption style={{marginHorizontal: 5}}>{post.numberOfComments} comments</Caption>
                     <Caption style={{marginHorizontal: 5}}>{post.numberOfFavorites} saved</Caption>
+
+                    <Caption style={{textAlign: "right", flex: 1}}>{new Date(post.createdDate).toDateString()}</Caption>
                 </HorizontalView>
             </CardActions>
         </Card>

@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {ScrollView, View} from "react-native";
-import {getUserInfo, uploadAvatar, uploadBackgroud, uploadBackground} from "./Personal.service";
+import {getUserInfo, uploadAvatar, uploadBackground} from "./Personal.service";
 import {Button, Card, Colors, List} from "react-native-paper";
 import CardContent from "react-native-paper/src/components/Card/CardContent";
 import ListItem from "react-native-paper/src/components/List/ListItem";
 import PostList from "../../components/PostList/PostList";
 import PostItem from "../../components/PostItem/PostItem";
 import PersonalHeader from "./PersonalHeader";
-import ApiUtil from "../../utils/ApiUtil";
 import {useDispatch} from "react-redux";
 
 
@@ -60,7 +59,7 @@ function Personal({navigation, route}) {
     }
 
     return (
-        <View
+        <View style={{height: "100%"}}
             showsVerticalScrollIndicator={true}>
             {
                 userInfo ?
@@ -88,8 +87,10 @@ function Personal({navigation, route}) {
                                                           />
                                                           <List.Item
                                                               title={`${userInfo.numberOfFollowers} followers`}
-                                                              left={props => <List.Icon {...props}
-                                                                                        icon="account-multiple-plus-outline"/>}
+                                                              left={
+                                                                  props =>
+                                                                      <List.Icon {...props}
+                                                                                 icon="account-multiple-plus-outline"/>}
                                                           />
                                                           {moreInfo}
                                                           <List.Item

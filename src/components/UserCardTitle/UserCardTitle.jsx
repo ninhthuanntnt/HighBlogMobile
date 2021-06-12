@@ -6,6 +6,7 @@ import {useNavigation} from "@react-navigation/native";
 
 function UserCardTitle({user}) {
     let navigation = useNavigation();
+
     return (
         <TouchableRipple onPress={() => navigation.navigate("PersonalStack", {
             screen: "Personal",
