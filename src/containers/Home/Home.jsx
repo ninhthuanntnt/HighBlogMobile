@@ -4,8 +4,6 @@ import PostList from "../../components/PostList/PostList";
 import PostItem from "../../components/PostItem/PostItem";
 
 function Home({title, navigation}) {
-    console.log("Re-render Home");
-
     return (
         <View>
             <PostList url={"/api/v1/posts?categoryId=1"}
