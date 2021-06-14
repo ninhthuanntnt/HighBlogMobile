@@ -8,7 +8,7 @@ import LoginedView from "../../components/LoginedView/LoginedView";
 
 function Favorite({navigation}) {
     return (
-        <View>
+        <View style={{height: "100%"}}>
             <LoginedView fallBackComponent={(<RequiredLogin navigation={navigation}/>)}>
                 <PostList url={"/api/v1/user/favorite-posts"}
                           renderItem={(item)=>(

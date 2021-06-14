@@ -59,7 +59,7 @@ function Personal({navigation, route}) {
     }
 
     return (
-        <View
+        <View style={{height: "100%"}}
             showsVerticalScrollIndicator={true}>
             {
                 userInfo ?
@@ -87,8 +87,10 @@ function Personal({navigation, route}) {
                                                           />
                                                           <List.Item
                                                               title={`${userInfo.numberOfFollowers} followers`}
-                                                              left={props => <List.Icon {...props}
-                                                                                        icon="account-multiple-plus-outline"/>}
+                                                              left={
+                                                                  props =>
+                                                                      <List.Icon {...props}
+                                                                                 icon="account-multiple-plus-outline"/>}
                                                           />
                                                           {moreInfo}
                                                           <List.Item

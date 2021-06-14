@@ -5,7 +5,7 @@ import PostItem from "../../components/PostItem/PostItem";
 
 function Home({title, navigation}) {
     return (
-        <View>
+        <View style={{height: "100%"}}>
             <PostList url={"/api/v1/posts?categoryId=1"}
             renderItem={(item)=>(
                 <PostItem post={item.item}/>

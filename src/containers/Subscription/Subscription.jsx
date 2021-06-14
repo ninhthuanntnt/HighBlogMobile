@@ -7,7 +7,7 @@ import RequiredLogin from "../RequeredLogin/RequiredLogin";
 
 function Subscription({navigation}) {
     return (
-        <View>
+        <View style={{height: "100%"}}>
             <LoginedView fallBackComponent={(<RequiredLogin navigation={navigation}/>)}>
                 <PostList url={"/api/v1/user/posts/subscriptions?categoryId=1"}
                           renderItem={(item)=>(

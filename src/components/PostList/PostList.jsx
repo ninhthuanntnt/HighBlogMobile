@@ -62,7 +62,7 @@ function PostList({url, listHeaderComponent, renderItem, isPagination = true}) {
             )
     }
     return (
-        <View style={{height: "100%"}}>
+        <View style={{flex: 1}}>
             <OptimizedFlatList data={listPosts}
                                keyExtractor={(item, index) => index.toString()}
                                ListHeaderComponent={listHeaderComponent}

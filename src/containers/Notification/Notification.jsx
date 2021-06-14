@@ -9,7 +9,7 @@ import NotificationItem from "../../components/NotificationItem/NotificationItem
 
 function Notification({navigation}) {
     return (
-        <View>
+        <View style={{height: "100%"}}>
             <LoginedView fallBackComponent={(<RequiredLogin navigation={navigation}/>)}>
                 <PostList url={"/api/v1/user/notifications"}
                           renderItem={(item)=>(
