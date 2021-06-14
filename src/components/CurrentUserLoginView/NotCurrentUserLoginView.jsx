@@ -5,8 +5,12 @@ function CurrentUserLoginView({user, children}) {
     let userData = useSelector(state => state.userData);
 
     let visibleView = children;
-    if (userData.nickName == user.nickName)
+    if (userData) {
+        if (userData.nickName === user.nickName)
+            visibleView = (<></>);
+    } else {
         visibleView = (<></>);
+    }
 
     return visibleView;
 }
