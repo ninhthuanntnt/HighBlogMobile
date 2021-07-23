@@ -16,6 +16,7 @@ import ImageStack from "./ImageStack";
 import {getProfile} from "../containers/Login/Login.service";
 import {useDispatch} from "react-redux";
 import {setUserData} from "../redux/actions/userDataAction";
+import WalletStack from "./WalletStack";
 
 
 const Stack = createStackNavigator();
@@ -80,6 +81,10 @@ export default function ApplicationNavigator() {
                           options={({route}) => (
                               {title: '@' + route.params.params.nickName}
                           )}/>
+
+            <Stack.Screen name={"WalletStack"}
+                          component={WalletStack}
+                          options={{title: "Wallet"}}/>
 
             <Stack.Screen name={"SearchStack"}
                           component={SearchStack}

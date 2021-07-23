@@ -63,25 +63,25 @@ function PostList({url, listHeaderComponent, renderItem, isPagination = true}) {
     }
     return (
         <View style={{flex: 1}}>
-            <OptimizedFlatList data={listPosts}
-                               keyExtractor={(item, index) => index.toString()}
-                               ListHeaderComponent={listHeaderComponent}
-                               renderItem={renderItem}
-                               refreshing={refreshing}
-                               onRefresh={resetData}
-                               ItemSeparatorComponent={() => (<Divider/>)}
-                               onEndReachedThreshold={10}
-                               onEndReached={isPagination ? appendData : () => {
-                               }}
-                               ListEmptyComponent={listEmptyComponent}
-                               removeClippedSubviews={true}
-                               maxToRenderPerBatch={5}
-                               ListFooterComponent={listPosts === null
-                                   ? <ActivityIndicator animating={true}
-                                                        color={Colors.red800}/>
-                                   : <></>
-                               }
-                               showsVerticalScrollIndicator={false}
+            <FlatList data={listPosts}
+                      keyExtractor={(item, index) => index.toString()}
+                      ListHeaderComponent={listHeaderComponent}
+                      renderItem={renderItem}
+                      refreshing={refreshing}
+                      onRefresh={resetData}
+                      ItemSeparatorComponent={() => (<Divider/>)}
+                      onEndReachedThreshold={10}
+                      onEndReached={isPagination ? appendData : () => {
+                      }}
+                      ListEmptyComponent={listEmptyComponent}
+                      removeClippedSubviews={true}
+                      maxToRenderPerBatch={20}
+                      ListFooterComponent={listPosts === null
+                          ? <ActivityIndicator animating={true}
+                                               color={Colors.red800}/>
+                          : <></>
+                      }
+                      showsVerticalScrollIndicator={false}
             />
         </View>
     );
