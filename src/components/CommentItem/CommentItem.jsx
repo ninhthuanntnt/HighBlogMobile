@@ -4,6 +4,7 @@ import CardContent from "react-native-paper/src/components/Card/CardContent";
 import {useNavigation} from "@react-navigation/native";
 import UserCardTitle from "../UserCardTitle/UserCardTitle";
 import CardActions from "react-native-paper/src/components/Card/CardActions";
+import LoginedView from "../LoginedView/LoginedView";
 
 function CommentItem({comment, postId}) {
     let navigation = useNavigation();
@@ -46,9 +47,11 @@ function CommentItem({comment, postId}) {
                     <Title>{comment.title}</Title>
                     <Text>{comment.content}</Text>
                 </CardContent>
-                <CardActions style={{justifyContent: "flex-end"}}>
-                    <Button onPress={navigationToChildCommentScreen}>reply</Button>
-                </CardActions>
+                <LoginedView>
+                    <CardActions style={{justifyContent: "flex-end"}}>
+                        <Button onPress={navigationToChildCommentScreen}>reply</Button>
+                    </CardActions>
+                </LoginedView>
             </Card>
             {childComments}
         </>

@@ -33,7 +33,11 @@ export default function Setting({navigation}) {
                               })}/>
 
                     <ListItem title={"Your wallet"}
-                              left={() => <List.Icon icon={"wallet-outline"}/>}/>
+                              left={() => <List.Icon icon={"wallet-outline"}/>}
+                              onPress={() => navigation.navigate("WalletStack", {
+                                  screen: "Wallet",
+                                  params: {userId: userData.id}
+                              })}/>
 
                     <ListItem title={"Edit profile"}
                               left={() => <List.Icon icon={"account-edit-outline"}/>}/>
